@@ -5,6 +5,8 @@
 
 body{
   background: linear-gradient(to left top, var(--blue-2),var(--blue-1),#ffffff) fixed;
+  height: auto;
+  overflow: visible;
 }
 
 .App {
@@ -38,19 +40,90 @@ body{
 
 .react-icons {
   vertical-align: middle;
-  color: white;
+  color: var(--blue-2);
   margin: 20px;
+  cursor: pointer;
   transition: ease-in-out 0.3s;
 }
 
 a:hover .react-icons {
   transform: scale(1.1);
-  animation: shake 0.5s linear;
+}
+
+.scroll {
+  width: 2em;
+  height: 2em;
+  background-color: transparent;
+  z-index: 80; 
+  bottom: 50px;
+  position: absolute;
+  border-width: 0 0.25em 0.25em 0;
+  border-style: solid;
+  border-color: white;
+  animation: scrollBounce 1.2s ease-in-out infinite;
+}
+
+.scrollFadeOut {
+    animation: fadeOut 0.3s ease-in-out forwards, scrollBounce 1.2s ease-in-out infinite;
+}
+
+.scrollFadeIn {
+    animation: fadeIn 0.3s ease-in-out forwards, scrollBounce 1.2s ease-in-out infinite;
+}
+
+/* Animations */
+
+.flyFromTop {
+  animation: flyFromTop 1s;
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.fadeOut {
+  animation: fadeOut 0.3s ease-in-out;
+}
+
+@keyframes flyFromTop {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0%); opacity: 1; }  
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; display: none; }
+  to { opacity: 1; }  
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; display: none; }  
+}
+
+@keyframes scrollBounce {
+  0%{
+      transform: translateY(20%) rotate(45deg);
+  }
+  50%{
+      transform: translateY(0%) rotate(45deg);
+  }
+  100%{
+      transform: translateY(20%) rotate(45deg);
+  }
+}
+
+@keyframes bubbleBounce {
+  0% { transform: translateY(0);}
+  20% { transform: translateY(-10px);}
+  30% { transform: translateY(5px);}
+  40% { transform: translateY(-7px);}
+  50% { transform: translateY(2px);}
+  55% { transform: translateY(0px);}
+  100% { transform: translateY(0px);}
 }
 
 /* Text */
 h1 {
-  color: white;
   font-size: 65px;
   font-family: 'Source Sans 3';
   font-weight: 900;
@@ -58,7 +131,6 @@ h1 {
 }
 
 p {
-  color: white;
   font-size: 20px;
   font-family: 'Source Sans 3';
   font-weight: 500;
@@ -69,24 +141,36 @@ p {
 
 .left {float: left;}
 .right {float: right;}
+.center {margin-left: 50%;}
 
 .section {
   margin: 10px;
+  margin-bottom: 10%;
   box-sizing: border-box;
   display: flex;
+  align-items: stretch;
   justify-content: space-evenly;
   padding: 5px;
   width: 100%;
+  height: 500%;
 }
 
 /* Navigation */
 
 nav {
-  background: transparent;
+  background-color: transparent;
   box-sizing: content-box;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   max-width: 100%;
   height: 100px;
   padding: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+nav.scrolled {
+  backdrop-filter: blur(5px);
 }
 
 .left_header { float: left; max-width: 50%; color: #51cee7; display: inline-flex;}
@@ -102,7 +186,7 @@ nav {
   transform: scale(1.1);
 }
 
-ul li {
+nav ul li {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -112,17 +196,51 @@ ul li {
   font-size: 18px;
 }
 
-ul li a {
+nav ul li a {
   color: inherit;
   text-decoration: none;
   transition: ease-in-out 0.3s;
 }
 
-ul li a:hover {
+nav ul li a:hover {
   transform: scale(1.1);
 }
 
-/* About */
+/* About Part 1 */
+
+.bubble-contain {
+  top: 40%;
+  left: 45%;
+  position: absolute;
+  animation: bubbleBounce 1.5s cubic-bezier(0.08, 1, 0.5, 1.5) 2s 1, flyFromTop 1.2s ease-in 0s 1;
+}
+
+
+.bubble {
+  background: rgba(255, 255, 255, .45);
+  width: max-content;
+  height: 50px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color:#27adc8;
+  font-weight: 700;
+  font-family: 'Source Code Pro';
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  margin-top: 55%;
+  width: 0;
+  height: 0;
+  border: 15px solid transparent;
+  border-top-color: rgba(255, 255, 255, .45);
+  border-left: 0;
+}
 
 .contacts {
   background: transparent;
@@ -134,19 +252,21 @@ ul li a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
+  z-index: 10;
 }
 
 .title {
   margin: 10px;
   margin-top: 20%;
-  margin-left: 12%;
+  margin-left: 10%;
   position: relative;
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: center;
   background: transparent;
+  color: white;
   padding: 10px;
   width: 800px;
   height: 500px;
@@ -160,6 +280,82 @@ ul li a:hover {
 }
 
 .intro::after, .intro::before {
-  content: '· · ·';
+  content: ' · ';
   margin: 10px;
+}
+
+.box {
+  margin: 10px;
+  margin-top: 20%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  background: white;
+  border-radius: 20px;
+  padding: 10px;
+  width: 400px;
+  height: 500px;
+}
+
+/* Modal/Bubble GRRR */
+
+.modal {
+  margin: 10px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, .45);
+  border-radius: 20px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 50px;
+  color: var(--blue-2);
+  font-family: 'Source Code Pro';
+  font-size: 18px;
+  z-index: 10;
+  transition: 0.5s;
+}
+
+.modal::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  margin-top: -45%;
+  margin-left: -75%;
+  width: 0;
+  height: 0;
+  border: 25px solid transparent;
+  border-bottom-color: rgba(255, 255, 255, .45);
+  border-left: 0;
+}
+
+.modal-contain {
+  top: 65%;
+  left: 1%;
+  position: fixed;
+}
+
+/* About Part 2 */
+
+.boxHeading {
+  color: var(--blue-1);
+  font-size: 35px;
+  margin-top: 0;
+  padding: 5px;
+}
+
+.list li {
+  color: var(--blue-2);
+  display: flex;
+  margin-left: -10%;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Source Code Pro';
+  font-size: 20px;
+  font-weight: 500;
+  
 }
