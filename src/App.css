@@ -100,6 +100,18 @@ a:hover .react-icons {
   to { opacity: 0; display: none; }  
 }
 
+@keyframes sideBounce{
+  0%{
+    transform: translateX(20%);
+  }
+  50%{
+    transform: translateX(5%);
+  }
+  100%{
+    transform: translateX(20%);
+  }
+}
+
 @keyframes scrollBounce {
   0%{
       transform: translateY(20%) rotate(45deg);
@@ -146,13 +158,26 @@ p {
 .section {
   margin: 10px;
   margin-bottom: 10%;
+  margin-left: 12%;
   box-sizing: border-box;
   display: flex;
   align-items: stretch;
-  justify-content: space-evenly;
   padding: 5px;
-  width: 100%;
+  width: 80%;
   height: 500%;
+}
+
+.section div {
+  flex: 1;
+  display: flex;
+}
+
+.section-card {
+  background: red;
+  border-radius: 10px;
+  height: min-content;
+  width: 100%;
+  display: relative;
 }
 
 /* Navigation */
@@ -209,7 +234,7 @@ nav ul li a:hover {
 /* About Part 1 */
 
 .bubble-contain {
-  top: 40%;
+  top: 35%;
   left: 45%;
   position: absolute;
   animation: bubbleBounce 1.5s cubic-bezier(0.08, 1, 0.5, 1.5) 2s 1, flyFromTop 1.2s ease-in 0s 1;
@@ -258,8 +283,7 @@ nav ul li a:hover {
 
 .title {
   margin: 10px;
-  margin-top: 20%;
-  margin-left: 10%;
+  margin-top: 15%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -292,11 +316,18 @@ nav ul li a:hover {
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  background: white;
+  background: inherit;
+  background-color: white;
   border-radius: 20px;
   padding: 10px;
   width: 400px;
   height: 500px;
+  transition: .5s ease-in-out;
+}
+
+.box:hover {
+  transform: translateY(-15px);
+  filter: drop-shadow(0 15px 0 var(--blue-2));
 }
 
 /* Modal/Bubble GRRR */
@@ -342,20 +373,40 @@ nav ul li a:hover {
 /* About Part 2 */
 
 .boxHeading {
-  color: var(--blue-1);
+  color: white;
+  background: linear-gradient(to top, var(--blue-1), var(--blue-2));
+  border-radius: 15px 15px 0 0;
+  height: 22%;
+  width: 100%;
+  margin-top: 8px;
   font-size: 35px;
-  margin-top: 0;
-  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .list li {
   color: var(--blue-2);
   display: flex;
-  margin-left: -10%;
-  justify-content: center;
+  margin-top: 4px;
+  margin-left: -4.5%;
+  width: 90%;
+  justify-content: flex-start;
   align-items: center;
   font-family: 'Source Code Pro';
   font-size: 20px;
-  font-weight: 500;
-  
+  font-weight: 600;
+  padding: 15px;
+}
+
+.list li:nth-of-type(1n+2) {
+  border-top: #afe4ee solid 1px;
+}
+
+.list li::before {
+  margin-right: 30px;
+  content: '➜';
+  font-weight: 900;
+  color: var(--blue-1);
+  animation: sideBounce 1.3s ease-in-out infinite;
 }

@@ -31,7 +31,6 @@ const About = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log('scroll:', window.scrollY);
       setScrolled(window.scrollY > 150);
     };
 

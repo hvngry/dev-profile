@@ -2,23 +2,17 @@ import '../App.css';
 
 const Projects = () => {
   return (
-    <div className="section">
-      <div className="left">
-        <div className="title">
-          <h1>eduexp</h1>
-          <p>Front-end Developer, Graphic Designer</p>
-          <p> I like long walks on the beach, big dick, and fried chicken</p>
+      <div className="section">
+        <div className="section-card">
+          <div className="boxHeading"><h2>Education & Experience</h2></div>
+          <h2>hii</h2>
+          {/* <div>
+            <div className="box"></div>
+            <div className="box"></div>
+            <div className="box"></div>
+          </div> */}
         </div>
       </div>
-
-      <div className="right">
-        <div className="title">
-          <h1>hiii</h1>
-        </div>
-      </div>
-
-
-    </div>
     
   );
 }
